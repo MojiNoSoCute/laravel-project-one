@@ -35,59 +35,186 @@
             border-radius: 50%;
             background-color: #ccc;
         }
+        .navbar {
+            padding: 0.5rem 1rem;
+        }
+        
+        @media (min-width: 1200px) {
+            .navbar {
+                padding: 0.5rem 280px;
+            }
+        }
+        
+        /* Sticky footer implementation */
+        html, body {
+            height: 100%;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1 0 auto;
+        }
+        
         .footer {
+            flex-shrink: 0;
             background-color: #333;
             color: #fff;
+            margin-top: auto;
         }
-        .navbar {
-            padding: 0px 280px 0px 280px;
+        
+        /* Custom column class for 5 items per row */
+        .col-lg-2-4 {
+            flex: 0 0 auto;
+            width: 20%;
+        }
+        
+        @media (max-width: 991.98px) {
+            .col-lg-2-4 {
+                width: 50%;
+            }
+        }
+        
+        @media (max-width: 575.98px) {
+            .col-lg-2-4 {
+                width: 100%;
+            }
+        }
+        
+        /* Image upload and display styles */
+        .post-image {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Additional footer improvements */
+        .footer .contact-info i {
+            color: #ff9999;
+            width: 20px;
+        }
+        
+        .footer a:hover {
+            color: #ffffff !important;
+            text-decoration: underline;
+        }
+        
+        .footer hr {
+            opacity: 0.3;
+        }
+        
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 0.9rem;
+            }
+            
+            .main-hero {
+                padding: 3rem 1rem;
+            }
+            
+            .main-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .main-hero h2 {
+                font-size: 1.3rem;
+            }
+            
+            .footer {
+                text-align: center;
+            }
+            
+            .footer .contact-info {
+                margin-top: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .footer h3 {
+                font-size: 1.1rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a href="{{ route('index') }}" class="navbar-brand">ระบบประชาสัมพันธ์หลักสูตรวิศวกรรมซอฟต์แวร์</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a href="{{ route('index') }}" class="navbar-brand">ระบบประชาสัมพันธ์หลักสูตรวิศวกรรมซอฟต์แวร์</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a href="{{ route('index') }}" class="nav-link {{ request()->is(patterns: '/') ? 'active' : '' }}">หน้าหลัก</a>
-                    </li>
-                    {{-- <li class="nav-item">
-                        <a href="{{ route('create') }}" class="nav-link">Create Post</a>
-                    </li> --}}
-                </ul>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a href="{{ route('index') }}" class="nav-link {{ request()->is(patterns: '/') ? 'active' : '' }}">หน้าหลัก</a>
+                        </li>
+                        {{-- <li class="nav-item">
+                            <a href="{{ route('create') }}" class="nav-link">Create Post</a>
+                        </li> --}}
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <section class="main-hero bg-red text-white">
-        <div class="container">
-            <h1>วิศวกรรมซอฟต์แวร์</h1>
-            <h2>Software Engineering</h2>
-            <p>หลักสูตรวิศวกรรมศาสตรบัณฑิต สาขาวิชาวิศวกรรมซอฟต์แวร์</p>
-            <a href="#" class="btn btn-outline-light rounded-pill mt-3">คู่มือหลักสูตร</a>
-        </div>
-    </section>
+        <section class="main-hero bg-red text-white">
+            <div class="container">
+                <h1>วิศวกรรมซอฟต์แวร์</h1>
+                <h2>Software Engineering</h2>
+                <p>หลักสูตรวิศวกรรมศาสตรบัณฑิต สาขาวิชาวิศวกรรมซอฟต์แวร์</p>
+                <a href="#" class="btn btn-outline-light rounded-pill mt-3">คู่มือหลักสูตร</a>
+            </div>
+        </section>
 
-    <div class="container my-5">
-        @yield('content')
+        <main class="container my-5">
+            @yield('content')
+        </main>
     </div>
 
-    <footer class="footer py-5">
-        <div class="container ">
-            <div class="row">
-                <div class="col-md-6 mb-4 mb-md-0">
-                    <h3 class="text-light-red">ระบบประเมินผลสัมฤทธิ์หลักสูตรวิศวกรรมซอฟต์แวร์</h3>
-                    <p>ข้อมูลหลักสูตร ข่าวสาร และกิจกรรมที่เกี่ยวข้องกับหลักสูตรวิศวกรรมซอฟต์แวร์</p>
+    <footer class="footer py-5 mt-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-6 col-md-6 mb-4 mb-md-0">
+                    <h3 class="text-light-red mb-3">ระบบประเมินผลสัมฤทธิ์หลักสูตรวิศวกรรมซอฟต์แวร์</h3>
+                    <p class="mb-3">ข้อมูลหลักสูตร ข่าวสาร และกิจกรรมที่เกี่ยวข้องกับหลักสูตรวิศวกรรมซอฟต์แวร์</p>
+                    <div class="d-flex flex-column flex-sm-row gap-3">
+                        <small class="text-white">&copy; 2025 มหาวิทยาลัยราชภัฏนครปฐม</small>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3 class="text-light-red">ติดต่อเรา</h3>
-                    <p>ภาควิชาวิศวกรรมซอฟต์แวร์<br>โทรศัพท์ 02-xxx-xxxx<br>อีเมล npru@webmail.npru.ac.th</p>
+                <div class="col-lg-6 col-md-6">
+                    <h3 class="text-light-red mb-3">ติดต่อเรา</h3>
+                    <div class="contact-info">
+                        <p class="mb-2">
+                            <i class="fas fa-building me-2"></i>
+                            <strong>ภาควิชาวิศวกรรมซอฟต์แวร์</strong>
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-phone me-2"></i>
+                            โทรศัพท์ 02-xxx-xxxx
+                        </p>
+                        <p class="mb-2">
+                            <i class="fas fa-envelope me-2"></i>
+                            <a href="mailto:npru@webmail.npru.ac.th" class="text-light text-decoration-none">npru@webmail.npru.ac.th</a>
+                        </p>
+                        <p class="mb-0">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            มหาวิทยาลัยราชภัฏนครปฐม
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <small class="text-white">พัฒนาโดย หลักสูตรวิศวกรรมซอฟต์แวร์ | คณะเทคโนโลยีสารสนเทศ</small>
                 </div>
             </div>
         </div>

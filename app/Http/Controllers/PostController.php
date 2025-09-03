@@ -31,12 +31,23 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'main' => 'required',
             'title' => 'required',
             'content' => 'required'
         ]);
 
-        Post::create($request->only(['main', 'title', 'content']));
+        $data = $request->only(['main', 'title', 'content']);
+        
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads'), $imageName);
+            $data['image'] = 'uploads/' . $imageName;
+        }
+
+        Post::create($data);
 
         return redirect()->route('index')->with('success', 'Post created successfully!');
     }
@@ -63,14 +74,30 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
          $request->validate([
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'main' => 'required',
             'title' => 'required',
             'content' => 'required'
         ]);
 
-        $post->update($request->only(['main', 'title', 'content']));
+        $data = $request->only(['main', 'title', 'content']);
+        
+        // Handle image upload if new image is provided
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($post->image && file_exists(public_path($post->image))) {
+                unlink(public_path($post->image));
+            }
+            
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads'), $imageName);
+            $data['image'] = 'uploads/' . $imageName;
+        }
 
-        return redirect()->route('index')->with('success', 'Post update successfully!');
+        $post->update($data);
+
+        return redirect()->route('index')->with('success', 'Post updated successfully!');
     }
 
     /**
@@ -78,8 +105,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // Delete associated image file if it exists
+        if ($post->image && file_exists(public_path($post->image))) {
+            unlink(public_path($post->image));
+        }
+        
         $post->delete();
-        return redirect()->route('index')->with('success', 'Post delete successfully!');
-
+        return redirect()->route('index')->with('success', 'Post deleted successfully!');
     }
 }
