@@ -1,153 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-        
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         .bg-red {
             background-color: #e60000;
         }
+
         .text-light-red {
             color: #ff9999;
         }
+
         .text-white {
             color: #fff;
         }
+
         .main-hero {
             padding: 5rem 1rem;
         }
+
         .section-title {
             font-weight: 700;
             border-bottom: 2px solid #e60000;
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
+
         .card-custom {
             background-color: #f2f2f2;
         }
+
         .teacher-img {
             width: 100px;
             height: 100px;
             border-radius: 50%;
             background-color: #ccc;
         }
+
         .navbar {
             padding: 0.5rem 1rem;
         }
-        
+
         @media (min-width: 1200px) {
             .navbar {
                 padding: 0.5rem 280px;
             }
         }
-        
+
         /* Sticky footer implementation */
-        html, body {
+        html,
+        body {
             height: 100%;
         }
-        
+
         body {
             display: flex;
             flex-direction: column;
         }
-        
+
         .main-content {
             flex: 1 0 auto;
         }
-        
+
         .footer {
             flex-shrink: 0;
             background-color: #333;
             color: #fff;
             margin-top: auto;
         }
-        
+
         /* Custom column class for 5 items per row */
         .col-lg-2-4 {
             flex: 0 0 auto;
             width: 20%;
         }
-        
+
         @media (max-width: 991.98px) {
             .col-lg-2-4 {
                 width: 50%;
             }
         }
-        
+
         @media (max-width: 575.98px) {
             .col-lg-2-4 {
                 width: 100%;
             }
         }
-        
+
         /* Image upload and display styles */
         .post-image {
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         /* Additional footer improvements */
         .footer .contact-info i {
             color: #ff9999;
             width: 20px;
         }
-        
+
         .footer a:hover {
             color: #ffffff !important;
             text-decoration: underline;
         }
-        
+
         .footer hr {
             opacity: 0.3;
         }
-        
+
         /* Responsive improvements */
         @media (max-width: 768px) {
             .navbar-brand {
                 font-size: 0.9rem;
             }
-            
+
             .main-hero {
                 padding: 3rem 1rem;
             }
-            
+
             .main-hero h1 {
                 font-size: 1.8rem;
             }
-            
+
             .main-hero h2 {
                 font-size: 1.3rem;
             }
-            
+
             .footer {
                 text-align: center;
             }
-            
+
             .footer .contact-info {
                 margin-top: 2rem;
             }
         }
-        
+
         @media (max-width: 576px) {
             .footer h3 {
                 font-size: 1.1rem;
             }
-            
+
             .footer p {
                 font-size: 0.9rem;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="main-content">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a href="{{ route('index') }}" class="navbar-brand">ระบบประชาสัมพันธ์หลักสูตรวิศวกรรมซอฟต์แวร์</a>
+                <a href="{{ route('home') }}" class="navbar-brand">ระบบประชาสัมพันธ์หลักสูตรวิศวกรรมซอฟต์แวร์</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -155,7 +165,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a href="{{ route('index') }}" class="nav-link {{ request()->is(patterns: '/') ? 'active' : '' }}">หน้าหลัก</a>
+                            <a href="{{ route('home') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">หน้าหลัก</a>
                         </li>
                         {{-- <li class="nav-item">
                             <a href="{{ route('create') }}" class="nav-link">Create Post</a>
@@ -188,6 +198,7 @@
                     <div class="d-flex flex-column flex-sm-row gap-3">
                         <small class="text-white">&copy; 2025 มหาวิทยาลัยราชภัฏนครปฐม</small>
                     </div>
+                    <a href="{{ route('admin.index') }}">admin page</a>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <h3 class="text-light-red mb-3">ติดต่อเรา</h3>
@@ -220,6 +231,7 @@
         </div>
     </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

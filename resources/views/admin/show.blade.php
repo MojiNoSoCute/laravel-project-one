@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="card">
                     @if($post->image)
-                        <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="card-img-top" style="height: 100%; object-fit: cover;">
+                        <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="card-img-top" style="height: 400px; object-fit: cover;">
                     @endif
                     <div class="card-body">
                         <h1 class="card-title">{{ $post->title }}</h1>
@@ -24,7 +24,8 @@
                         </div>
                         <hr>
                         <div class="d-flex gap-2">
-                            <a href="{{ route('home') }}" class="btn btn-secondary">Back</a>
+                            <a href="{{ route('admin.index') }}" class="btn btn-secondary">Back</a>
+                            <a href="{{ route('edit', $post) }}" class="btn btn-warning">Edit</a>
                         </div>
                     </div>
                 </div>

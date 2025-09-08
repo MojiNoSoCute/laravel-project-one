@@ -14,7 +14,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('index', compact('posts'));
+        return view('admin.index', compact('posts'));
     }
 
     /**
@@ -22,7 +22,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('create');
+        return view('admin.create');
     }
 
     /**
@@ -38,7 +38,7 @@ class PostController extends Controller
         ]);
 
         $data = $request->only(['main', 'title', 'content']);
-        
+
         // Handle image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -49,7 +49,7 @@ class PostController extends Controller
 
         Post::create($data);
 
-        return redirect()->route('index')->with('success', 'Post created successfully!');
+        return redirect()->route('admin.index')->with('success', 'Post created successfully!');
     }
 
     /**
@@ -57,7 +57,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('show', compact('post'));
+        return view('admin.show', compact('post'));
     }
 
     /**
@@ -65,7 +65,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('edit', compact('post'));
+        return view('admin.edit', compact('post'));
     }
 
     /**
@@ -73,7 +73,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-         $request->validate([
+        $request->validate([
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'main' => 'required',
             'title' => 'required',
@@ -81,14 +81,14 @@ class PostController extends Controller
         ]);
 
         $data = $request->only(['main', 'title', 'content']);
-        
+
         // Handle image upload if new image is provided
         if ($request->hasFile('image')) {
             // Delete old image if it exists
             if ($post->image && file_exists(public_path($post->image))) {
                 unlink(public_path($post->image));
             }
-            
+
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('uploads'), $imageName);
@@ -97,7 +97,7 @@ class PostController extends Controller
 
         $post->update($data);
 
-        return redirect()->route('index')->with('success', 'Post updated successfully!');
+        return redirect()->route('admin.index')->with('success', 'Post updated successfully!');
     }
 
     /**
@@ -109,8 +109,8 @@ class PostController extends Controller
         if ($post->image && file_exists(public_path($post->image))) {
             unlink(public_path($post->image));
         }
-        
+
         $post->delete();
-        return redirect()->route('index')->with('success', 'Post deleted successfully!');
+        return redirect()->route('admin.index')->with('success', 'Post deleted successfully!');
     }
 }
