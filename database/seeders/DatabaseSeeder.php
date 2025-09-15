@@ -13,11 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Run all seeders in proper order
+        $this->call([
+            ImageSeeder::class,  // Create images first
+            UserSeeder::class,   // Then users
+            PostSeeder::class,   // Finally posts (which reference images)
         ]);
+
+        $this->command->info('Database seeding completed successfully!');
     }
 }

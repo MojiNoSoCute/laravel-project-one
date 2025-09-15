@@ -232,6 +232,50 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Image preview functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageInput = document.getElementById('image');
+            if (imageInput) {
+                imageInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        // Check file size (2MB = 2 * 1024 * 1024 bytes)
+                        if (file.size > 2 * 1024 * 1024) {
+                            alert('File size must be less than 2MB');
+                            this.value = '';
+                            return;
+                        }
+
+                        // Show preview if it's an image
+                        if (file.type.startsWith('image/')) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                // Remove existing preview
+                                const existingPreview = document.getElementById('image-preview');
+                                if (existingPreview) {
+                                    existingPreview.remove();
+                                }
+
+                                // Create new preview
+                                const preview = document.createElement('div');
+                                preview.id = 'image-preview';
+                                preview.className = 'mt-2';
+                                preview.innerHTML = `
+                                    <div class="border rounded p-2 bg-light">
+                                        <img src="${e.target.result}" alt="Preview" class="img-thumbnail mx-auto d-block" style="max-width: 200px; max-height: 200px;">
+                                        <p class="text-center mt-1 mb-0"><small class="text-muted">Image preview</small></p>
+                                    </div>
+                                `;
+                                imageInput.parentNode.appendChild(preview);
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

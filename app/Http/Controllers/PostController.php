@@ -32,9 +32,21 @@ class PostController extends Controller
     {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'main' => 'required',
-            'title' => 'required',
-            'content' => 'required'
+            'main' => 'required|in:1,2,3,4,5',
+            'title' => 'required|string|max:255|min:3',
+            'content' => 'required|string|min:10'
+        ], [
+            'image.required' => 'Please select an image to upload.',
+            'image.image' => 'The file must be an image.',
+            'image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif, webp.',
+            'image.max' => 'The image size must not exceed 2MB.',
+            'main.required' => 'Please select a category.',
+            'main.in' => 'Please select a valid category.',
+            'title.required' => 'The title field is required.',
+            'title.min' => 'The title must be at least 3 characters.',
+            'title.max' => 'The title must not exceed 255 characters.',
+            'content.required' => 'The content field is required.',
+            'content.min' => 'The content must be at least 10 characters.'
         ]);
 
         $data = $request->only(['main', 'title', 'content']);
@@ -75,9 +87,20 @@ class PostController extends Controller
     {
         $request->validate([
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'main' => 'required',
-            'title' => 'required',
-            'content' => 'required'
+            'main' => 'required|in:1,2,3,4,5',
+            'title' => 'required|string|max:255|min:3',
+            'content' => 'required|string|min:10'
+        ], [
+            'image.image' => 'The file must be an image.',
+            'image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif, webp.',
+            'image.max' => 'The image size must not exceed 2MB.',
+            'main.required' => 'Please select a category.',
+            'main.in' => 'Please select a valid category.',
+            'title.required' => 'The title field is required.',
+            'title.min' => 'The title must be at least 3 characters.',
+            'title.max' => 'The title must not exceed 255 characters.',
+            'content.required' => 'The content field is required.',
+            'content.min' => 'The content must be at least 10 characters.'
         ]);
 
         $data = $request->only(['main', 'title', 'content']);
