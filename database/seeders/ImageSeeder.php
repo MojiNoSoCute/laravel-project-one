@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 
 class ImageSeeder extends Seeder
 {
@@ -19,34 +20,34 @@ class ImageSeeder extends Seeder
             File::makeDirectory($uploadDir, 0755, true);
         }
 
-        // Check if sample images exist, if not create them
+        // List of required images with specific dimensions for different types
         $requiredImages = [
-            'sample_course_overview.jpg',
-            'sample_curriculum.jpg',
-            'sample_hackathon.jpg',
-            'sample_tech_talk.jpg',
-            'sample_opensource.jpg',
-            'sample_teacher_1.jpg',
-            'sample_teacher_2.jpg',
-            'sample_teacher_3.jpg',
-            'sample_student_work_1.jpg',
-            'sample_student_work_2.jpg',
-            'sample_student_work_3.jpg',
-            'sample_alumni_1.jpg',
-            'sample_alumni_2.jpg',
-            'sample_alumni_3.jpg'
+            'sample_course_overview.jpg' => ['width' => 800, 'height' => 600, 'category' => 'tech'],
+            'sample_curriculum.jpg' => ['width' => 800, 'height' => 600, 'category' => 'business'],
+            'sample_hackathon.jpg' => ['width' => 800, 'height' => 600, 'category' => 'people'],
+            'sample_tech_talk.jpg' => ['width' => 800, 'height' => 600, 'category' => 'business'],
+            'sample_opensource.jpg' => ['width' => 800, 'height' => 600, 'category' => 'tech'],
+            'sample_teacher_1.jpg' => ['width' => 400, 'height' => 500, 'category' => 'people'],
+            'sample_teacher_2.jpg' => ['width' => 400, 'height' => 500, 'category' => 'people'],
+            'sample_teacher_3.jpg' => ['width' => 400, 'height' => 500, 'category' => 'people'],
+            'sample_student_work_1.jpg' => ['width' => 600, 'height' => 400, 'category' => 'tech'],
+            'sample_student_work_2.jpg' => ['width' => 600, 'height' => 400, 'category' => 'tech'],
+            'sample_student_work_3.jpg' => ['width' => 600, 'height' => 400, 'category' => 'tech'],
+            'sample_alumni_1.jpg' => ['width' => 400, 'height' => 500, 'category' => 'people'],
+            'sample_alumni_2.jpg' => ['width' => 400, 'height' => 500, 'category' => 'people'],
+            'sample_alumni_3.jpg' => ['width' => 400, 'height' => 500, 'category' => 'people']
         ];
 
         $missingImages = [];
-        foreach ($requiredImages as $image) {
-            if (!File::exists($uploadDir . '/' . $image)) {
-                $missingImages[] = $image;
+        foreach ($requiredImages as $imageName => $config) {
+            if (!File::exists($uploadDir . '/' . $imageName)) {
+                $missingImages[$imageName] = $config;
             }
         }
 
         if (!empty($missingImages)) {
-            $this->command->info('Creating ' . count($missingImages) . ' missing sample images...');
-            $this->createSampleImages($missingImages, $uploadDir);
+            $this->command->info('Downloading ' . count($missingImages) . ' random photos from internet...');
+            $this->downloadRandomImages($missingImages, $uploadDir);
         } else {
             $this->command->info('All sample images already exist.');
         }
@@ -55,83 +56,94 @@ class ImageSeeder extends Seeder
     }
 
     /**
-     * Create sample images with professional styling
+     * Download random images from Lorem Picsum (copyright-free)
      */
-    private function createSampleImages(array $imageNames, string $uploadDir): void
+    private function downloadRandomImages(array $missingImages, string $uploadDir): void
     {
-        $imageConfigs = [
-            'sample_course_overview.jpg' => ['color' => [52, 152, 219], 'text' => 'SOFTWARE', 'sub' => 'ENGINEERING'],
-            'sample_curriculum.jpg' => ['color' => [46, 125, 50], 'text' => 'CURRICULUM', 'sub' => 'STRUCTURE'],
-            'sample_hackathon.jpg' => ['color' => [156, 39, 176], 'text' => 'HACKATHON', 'sub' => '2025'],
-            'sample_tech_talk.jpg' => ['color' => [255, 87, 34], 'text' => 'TECH TALK', 'sub' => 'SERIES'],
-            'sample_opensource.jpg' => ['color' => [33, 150, 243], 'text' => 'OPEN SOURCE', 'sub' => 'WORKSHOP'],
-            'sample_teacher_1.jpg' => ['color' => [96, 125, 139], 'text' => 'DR. SOMCHAI', 'sub' => 'WEB EXPERT'],
-            'sample_teacher_2.jpg' => ['color' => [121, 85, 72], 'text' => 'DR. SIRIPORN', 'sub' => 'MOBILE DEV'],
-            'sample_teacher_3.jpg' => ['color' => [69, 90, 100], 'text' => 'PROF. NIRAN', 'sub' => 'TESTING'],
-            'sample_student_work_1.jpg' => ['color' => [76, 175, 80], 'text' => 'E-COMMERCE', 'sub' => 'PLATFORM'],
-            'sample_student_work_2.jpg' => ['color' => [63, 81, 181], 'text' => 'MOBILE APP', 'sub' => 'LEARNING'],
-            'sample_student_work_3.jpg' => ['color' => [233, 30, 99], 'text' => 'AI SYSTEM', 'sub' => 'TASK MGT'],
-            'sample_alumni_1.jpg' => ['color' => [255, 193, 7], 'text' => 'KITTIPONG', 'sub' => 'GOOGLE'],
-            'sample_alumni_2.jpg' => ['color' => [139, 195, 74], 'text' => 'PLOY S.', 'sub' => 'STARTUP CTO'],
-            'sample_alumni_3.jpg' => ['color' => [255, 152, 0], 'text' => 'ANAN W.', 'sub' => 'LINE THAI']
-        ];
+        foreach ($missingImages as $imageName => $config) {
+            try {
+                // Generate a random seed for consistent but random images
+                $seed = rand(1, 1000);
 
-        foreach ($imageNames as $imageName) {
-            if (isset($imageConfigs[$imageName])) {
-                $config = $imageConfigs[$imageName];
-                $this->createImage($uploadDir . '/' . $imageName, $config);
-                $this->command->info("Created: {$imageName}");
+                // Build URL based on category and dimensions
+                $url = $this->buildImageUrl($config['width'], $config['height'], $seed, $config['category']);
+
+                // Download the image
+                $response = Http::timeout(30)->get($url);
+
+                if ($response->successful()) {
+                    $filePath = $uploadDir . '/' . $imageName;
+                    file_put_contents($filePath, $response->body());
+                    $this->command->info("Downloaded: {$imageName} from {$url}");
+                } else {
+                    $this->command->error("Failed to download: {$imageName}");
+                    // Create a fallback placeholder if download fails
+                    $this->createFallbackImage($uploadDir . '/' . $imageName, $config);
+                }
+
+                // Small delay to be respectful to the service
+                usleep(500000); // 0.5 seconds
+
+            } catch (\Exception $e) {
+                $this->command->error("Error downloading {$imageName}: " . $e->getMessage());
+                // Create a fallback placeholder if download fails
+                $this->createFallbackImage($uploadDir . '/' . $imageName, $config);
             }
         }
     }
 
     /**
-     * Create a single professional image
+     * Build image URL based on category and requirements
      */
-    private function createImage(string $filepath, array $config): void
+    private function buildImageUrl(int $width, int $height, int $seed, string $category): string
     {
-        $width = 600;
-        $height = 400;
-        $img = imagecreate($width, $height);
+        // Base URL for Lorem Picsum
+        $baseUrl = "https://picsum.photos";
 
-        // Colors
-        $bgColor = imagecolorallocate($img, $config['color'][0], $config['color'][1], $config['color'][2]);
-        $textColor = imagecolorallocate($img, 255, 255, 255);
-        $borderColor = imagecolorallocate($img, 255, 255, 255);
-
-        // Gradient effect
-        $darkerBg = imagecolorallocate(
-            $img,
-            max(0, $config['color'][0] - 30),
-            max(0, $config['color'][1] - 30),
-            max(0, $config['color'][2] - 30)
-        );
-
-        for ($i = 0; $i < $height; $i += 20) {
-            imagefilledrectangle($img, 0, $i, $width, $i + 10, $darkerBg);
+        // For people category, use Lorem Picsum with specific seeds that often contain people
+        if ($category === 'people') {
+            // Use Lorem Picsum for people-related images with specific seeds
+            $peopleSeeds = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70];
+            $selectedSeed = $peopleSeeds[array_rand($peopleSeeds)];
+            return "{$baseUrl}/seed/{$selectedSeed}/{$width}/{$height}";
         }
 
-        // Main text
+        // For other categories, use Lorem Picsum with random seeds
+        return "{$baseUrl}/seed/{$seed}/{$width}/{$height}";
+    }
+
+    /**
+     * Create a simple fallback image if download fails
+     */
+    private function createFallbackImage(string $filepath, array $config): void
+    {
+        $width = $config['width'];
+        $height = $config['height'];
+        $img = imagecreate($width, $height);
+
+        // Create a simple gradient background
+        $colors = [
+            'tech' => [52, 152, 219],      // Blue
+            'business' => [46, 125, 50],   // Green  
+            'people' => [156, 39, 176]     // Purple
+        ];
+
+        $colorSet = $colors[$config['category']] ?? [128, 128, 128];
+        $bgColor = imagecolorallocate($img, $colorSet[0], $colorSet[1], $colorSet[2]);
+        $textColor = imagecolorallocate($img, 255, 255, 255);
+
+        // Add category text
+        $text = strtoupper($config['category']) . ' IMAGE';
         $font_size = 5;
-        $text = $config['text'];
         $text_width = imagefontwidth($font_size) * strlen($text);
         $text_x = ($width - $text_width) / 2;
-        $text_y = ($height / 2) - 20;
+        $text_y = ($height / 2) - 10;
         imagestring($img, $font_size, $text_x, $text_y, $text, $textColor);
 
-        // Subtext
-        $subfont_size = 3;
-        $subtext = $config['sub'];
-        $subtext_width = imagefontwidth($subfont_size) * strlen($subtext);
-        $subtext_x = ($width - $subtext_width) / 2;
-        $subtext_y = $text_y + 30;
-        imagestring($img, $subfont_size, $subtext_x, $subtext_y, $subtext, $textColor);
-
-        // Border
-        imagerectangle($img, 10, 10, $width - 11, $height - 11, $borderColor);
-
-        // Save with high quality
+        // Save the image
         imagejpeg($img, $filepath, 90);
         imagedestroy($img);
+
+        $this->command->info("Created fallback image: " . basename($filepath));
     }
 }
