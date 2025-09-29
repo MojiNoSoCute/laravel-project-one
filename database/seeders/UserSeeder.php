@@ -15,15 +15,30 @@ class UserSeeder extends Seeder
     {
         // Create admin user
         User::create([
-            'name' => 'Admin User',
+            'name' => 'ผู้ดูแลระบบ',
             'email' => 'admin@se.npru.ac.th',
             'email_verified_at' => now(),
             'password' => Hash::make('password123'),
         ]);
 
-        // Create test users
-        User::factory(5)->create();
+        // Create test users with Thai names
+        $thaiNames = [
+            'สมชาย ใจดี',
+            'สมหญิง รักเรียน',
+            'ประวิทย์ พัฒน์ชัย',
+            'สุนทรี สว่างจิต',
+            'ธนากร วิเศษชัย'
+        ];
 
-        $this->command->info('Created admin user and 5 test users.');
+        foreach ($thaiNames as $name) {
+            User::create([
+                'name' => $name,
+                'email' => strtolower(str_replace(' ', '.', $name)) . '@student.npru.ac.th',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password123'),
+            ]);
+        }
+
+        $this->command->info('สร้างผู้ใช้ผู้ดูแลระบบ 1 ราย และผู้ใช้ทดสอบ 5 ราย');
     }
 }

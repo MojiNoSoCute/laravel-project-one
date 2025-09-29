@@ -12,99 +12,99 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        // Sample posts for different categories
+        // Sample posts for different categories in Thai
         $posts = [
             // Category 1: Course Overview (ภาพรวมหลักสูตร)
             [
                 'main' => '1',
-                'title' => 'Software Engineering Program Overview',
-                'content' => 'The Software Engineering program at our university is designed to provide students with comprehensive knowledge and practical skills in software development, project management, and system design. Our curriculum covers modern programming languages, software architecture, database design, and software testing methodologies.',
+                'title' => 'หลักสูตรวิศวกรรมซอฟต์แวร์ ภาควิชาวิศวกรรมคอมพิวเตอร์',
+                'content' => 'หลักสูตรวิศวกรรมซอฟต์แวร์ของมหาวิทยาลัยของเราถูกออกแบบมาเพื่อให้นักศึกษามีความรู้ที่ครอบคลุมและทักษะการปฏิบัติจริงในการพัฒนาซอฟต์แวร์ การจัดการโครงการ และการออกแบบระบบ หลักสูตรของเราครอบคลุมภาษาโปรแกรมสมัยใหม่ สถาปัตยกรรมซอฟต์แวร์ การออกแบบฐานข้อมูล และวิธีการทดสอบซอฟต์แวร์',
                 'image' => 'uploads/sample_course_overview.jpg'
             ],
             [
                 'main' => '1',
-                'title' => 'Curriculum Structure and Learning Outcomes',
-                'content' => 'Our 4-year program is structured to progressively build expertise from fundamental programming concepts to advanced software engineering practices. Students will learn object-oriented programming, web development, mobile app development, and enterprise software solutions.',
+                'title' => 'โครงสร้างหลักสูตรและผลลัพธ์ที่คาดหวัง',
+                'content' => 'หลักสูตร 4 ปีของเราถูกออกแบบมาให้สร้างความเชี่ยวชาญตั้งแต่แนวคิดการเขียนโปรแกรมพื้นฐานไปจนถึงแนวทางการวิศวกรรมซอฟต์แวร์ขั้นสูง นักศึกษาจะได้เรียนรู้แนวคิดการเขียนโปรแกรมเชิงวัตถุ การพัฒนาเว็บไซต์ การพัฒนาแอปพลิเคชันมือถือ และโซลูชันซอฟต์แวร์องค์กร',
                 'image' => 'uploads/sample_curriculum.jpg'
             ],
 
             // Category 2: Interesting Activities (กิจกรรมที่น่าสนใจ)
             [
                 'main' => '2',
-                'title' => 'Annual Hackathon Competition 2025',
-                'content' => 'Join our exciting 48-hour hackathon where students collaborate to create innovative software solutions. Participants work in teams to develop applications addressing real-world problems, with mentorship from industry professionals and faculty members.',
+                'title' => 'การแข่งขันแฮกกาธอนประจำปี 2025',
+                'content' => 'เข้าร่วมการแข่งขันแฮกกาธอนที่น่าตื่นเต้นเป็นเวลา 48 ชั่วโมง ซึ่งนักศึกษาจะร่วมมือกันสร้างโซลูชันซอฟต์แวร์ที่เป็นนวัตกรรม ผู้เข้าร่วมจะทำงานเป็นทีมเพื่อพัฒนาแอปพลิเคชันที่แก้ไขปัญหาในโลกจริง โดยมีคำแนะนำจากมืออาชีพในอุตสาหกรรมและคณาจารย์',
                 'image' => 'uploads/sample_hackathon.jpg'
             ],
             [
                 'main' => '2',
-                'title' => 'Tech Talk Series: Industry Insights',
-                'content' => 'Monthly tech talks featuring guest speakers from leading technology companies. Students gain insights into current industry trends, emerging technologies, and career opportunities in software engineering.',
+                'title' => 'การบรรยายพิเศษ: แนวโน้มอุตสาหกรรม',
+                'content' => 'การบรรยายพิเศษรายเดือนโดยผู้เชี่ยวชาญจากบริษัทเทคโนโลยีชั้นนำ นักศึกษาจะได้รับข้อมูลเชิงลึกเกี่ยวกับแนวโน้มอุตสาหกรรมในปัจจุบัน เทคโนโลยีที่เกิดขึ้นใหม่ และโอกาสในการประกอบอาชีพในด้านวิศวกรรมซอฟต์แวร์',
                 'image' => 'uploads/sample_tech_talk.jpg'
             ],
             [
                 'main' => '2',
-                'title' => 'Open Source Contribution Workshop',
-                'content' => 'Learn how to contribute to open source projects and build your portfolio. This workshop covers Git workflows, code review processes, and best practices for collaborative software development.',
+                'title' => 'เวิร์กช็อปการมีส่วนร่วมในโอเพนซอร์ส',
+                'content' => 'เรียนรู้วิธีมีส่วนร่วมในโครงการโอเพนซอร์สและสร้างพอร์ตโฟลิโอของคุณ เวิร์กช็อปนี้ครอบคลุมเวิร์กโฟลว์ Git กระบวนการตรวจสอบโค้ด และแนวทางปฏิบัติที่ดีที่สุดสำหรับการพัฒนาซอฟต์แวร์แบบร่วมมือ',
                 'image' => 'uploads/sample_opensource.jpg'
             ],
 
             // Category 3: Teachers (อาจารย์ผู้สอน)
             [
                 'main' => '3',
-                'title' => 'Dr. Somchai Jaidee',
-                'content' => 'Professor of Software Engineering with 15 years of experience in web development and database systems. Specializes in full-stack development, RESTful APIs, and microservices architecture. PhD in Computer Science from Chulalongkorn University.',
+                'title' => 'ดร.สมชาย ใจดี',
+                'content' => 'ศาสตราจารย์ด้านวิศวกรรมซอฟต์แวร์ที่มีประสบการณ์มากกว่า 15 ปีในการพัฒนาเว็บและระบบฐานข้อมูล เชี่ยวชาญด้านการพัฒนาแอปพลิเคชันแบบ Full-stack, RESTful APIs และสถาปัตยกรรมไมโครเซอร์วิส สำเร็จการศึกษาปริญญาเอกด้านวิทยาการคอมพิวเตอร์จากจุฬาลงกรณ์มหาวิทยาลัย',
                 'image' => 'uploads/sample_teacher_1.jpg'
             ],
             [
                 'main' => '3',
-                'title' => 'Dr. Siriporn Thanakit',
-                'content' => 'Associate Professor specializing in mobile application development and user experience design. Expert in iOS and Android development, UI/UX principles, and human-computer interaction. Former senior developer at leading tech companies.',
+                'title' => 'ดร.สิริพร ธนกิจ',
+                'content' => 'รองศาสตราจารย์ที่เชี่ยวชาญด้านการพัฒนาแอปพลิเคชันมือถือและการออกแบบประสบการณ์ผู้ใช้ ผู้เชี่ยวชาญด้านการพัฒนา iOS และ Android, หลักการ UI/UX และปฏิสัมพันธ์ระหว่างมนุษย์กับคอมพิวเตอร์ เคยเป็นนักพัฒนาอาวุโสในบริษัทเทคโนโลยีชั้นนำ',
                 'image' => 'uploads/sample_teacher_2.jpg'
             ],
             [
                 'main' => '3',
-                'title' => 'Asst. Prof. Niran Suksan',
-                'content' => 'Assistant Professor focusing on software testing, quality assurance, and DevOps practices. Industry experience in automated testing frameworks, continuous integration, and cloud deployment strategies.',
+                'title' => 'ผศ.นิรันต์ สุขสน',
+                'content' => 'ผู้ช่วยศาสตราจารย์ที่มุ่งเน้นด้านการทดสอบซอฟต์แวร์ การรับประกันคุณภาพ และแนวทางปฏิบัติ DevOps มีประสบการณ์ในอุตสาหกรรมด้านเฟรมเวิร์กการทดสอบอัตโนมัติ ระบบการผสานโค้ดแบบต่อเนื่อง และกลยุทธ์การปรับใช้บนคลาวด์',
                 'image' => 'uploads/sample_teacher_3.jpg'
             ],
 
             // Category 4: Student Works (ผลงานนักศึกษา)
             [
                 'main' => '4',
-                'title' => 'E-Commerce Platform Development',
-                'content' => 'Final year project creating a complete e-commerce solution using Laravel and React. Features include user authentication, payment integration, inventory management, and admin dashboard. Developed by Team Alpha.',
+                'title' => 'การพัฒนาแพลตฟอร์มอีคอมเมิร์ซ',
+                'content' => 'โปรเจกต์จบชั้นปีที่สร้างโซลูชันอีคอมเมิร์ซแบบครบวงจรโดยใช้ Laravel และ React คุณสมบัติประกอบด้วย การยืนยันตัวตนของผู้ใช้ การผสานการชำระเงิน การจัดการสินค้าคงคลัง และแดชบอร์ดผู้ดูแลระบบ พัฒนาโดยทีม Alpha',
                 'image' => 'uploads/sample_student_work_1.jpg'
             ],
             [
                 'main' => '4',
-                'title' => 'Mobile Learning Application',
-                'content' => 'Cross-platform mobile app for online learning built with Flutter. Includes video streaming, interactive quizzes, progress tracking, and offline content access. Winner of Best Mobile App Award 2024.',
+                'title' => 'แอปพลิเคชันการเรียนรู้บนมือถือ',
+                'content' => 'แอปมือถือข้ามแพลตฟอร์มสำหรับการเรียนรู้ออนไลน์ที่สร้างด้วย Flutter ประกอบด้วย การสตรีมวิดีโอ แบบทดสอบแบบโต้ตอบ การติดตามความคืบหน้า และการเข้าถึงเนื้อหาแบบออฟไลน์ ได้รับรางวัลแอปมือถือที่ดีที่สุดปี 2024',
                 'image' => 'uploads/sample_student_work_2.jpg'
             ],
             [
                 'main' => '4',
-                'title' => 'AI-Powered Task Management System',
-                'content' => 'Intelligent task management system using machine learning to predict project timelines and optimize resource allocation. Built with Python Django and TensorFlow. Featured in university research publication.',
+                'title' => 'ระบบจัดการงานอัจฉริยะโดยใช้ AI',
+                'content' => 'ระบบจัดการงานอัจฉริยะที่ใช้การเรียนรู้ของเครื่องในการคาดการณ์ระยะเวลาของโครงการและเพิ่มประสิทธิภาพการจัดสรรทรัพยากร สร้างด้วย Python Django และ TensorFlow ได้รับการนำเสนอในวารสารวิจัยของมหาวิทยาลัย',
                 'image' => 'uploads/sample_student_work_3.jpg'
             ],
 
             // Category 5: Outstanding Alumni (ศิษย์เก่าเด่น)
             [
                 'main' => '5',
-                'title' => 'Kittipong Rattana - Senior Software Engineer at Google',
-                'content' => 'Class of 2018 graduate now working at Google Thailand as Senior Software Engineer. Leads the development of Google Cloud Platform services and mentors junior developers. Active contributor to open source projects.',
+                'title' => 'กิตติพงษ์ รัตน์ - วิศวกรซอฟต์แวร์อาวุโสที่ Google',
+                'content' => 'บัณฑิตปี 2018 ที่ตอนนี้ทำงานที่ Google Thailand ในตำแหน่งวิศวกรซอฟต์แวร์อาวุโส นำการพัฒนาบริการ Google Cloud Platform และให้คำแนะนำนักพัฒนาใหม่ ผู้มีส่วนร่วมในโครงการโอเพนซอร์สอย่างแข็งขัน',
                 'image' => 'uploads/sample_alumni_1.jpg'
             ],
             [
                 'main' => '5',
-                'title' => 'Ploy Siriporn - CTO at StartupXYZ',
-                'content' => 'Class of 2019 graduate who founded her own fintech startup. Successfully raised Series A funding and leads a team of 25 engineers. Recognized as "Young Entrepreneur of the Year 2023" by Tech Magazine.',
+                'title' => 'พลอย ศิริพร - หัวหน้าฝ่ายเทคโนโลยีที่ StartupXYZ',
+                'content' => 'บัณฑิตปี 2019 ที่ก่อตั้งสตาร์ทอัพด้านเทคโนโลยีการเงินของตนเอง ประสบความสำเร็จในการระดมทุน Series A และนำทีมนักวิศวกร 25 คน ได้รับการยอมรับว่าเป็น "ผู้ประกอบการรุ่นใหม่แห่งปี 2023" โดยนิตยสาร Tech',
                 'image' => 'uploads/sample_alumni_2.jpg'
             ],
             [
                 'main' => '5',
-                'title' => 'Anan Wongsakul - Lead Developer at LINE Thailand',
-                'content' => 'Class of 2020 graduate working as Lead Developer at LINE Thailand. Specializes in backend systems and messaging platforms. Regular speaker at tech conferences and active in the Thai developer community.',
+                'title' => 'อนันต์ วงศ์ศักดิ์ - หัวหน้านักพัฒนาที่ LINE Thailand',
+                'content' => 'บัณฑิตปี 2020 ที่ทำงานในตำแหน่งหัวหน้านักพัฒนาที่ LINE Thailand เชี่ยวชาญด้านระบบแบ็กเอนด์และแพลตฟอร์มการส่งข้อความ วิทยากรประจำในการประชุมเทคโนโลยีและมีส่วนร่วมอย่างแข็งขันในชุมชนนักพัฒนาไทย',
                 'image' => 'uploads/sample_alumni_3.jpg'
             ]
         ];
@@ -114,6 +114,6 @@ class PostSeeder extends Seeder
             Post::create($postData);
         }
 
-        $this->command->info('Created ' . count($posts) . ' sample posts across all categories.');
+        $this->command->info('สร้างโพสต์ตัวอย่าง ' . count($posts) . ' รายการในทุกหมวดหมู่');
     }
 }

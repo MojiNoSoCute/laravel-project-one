@@ -46,13 +46,13 @@ class ImageSeeder extends Seeder
         }
 
         if (!empty($missingImages)) {
-            $this->command->info('Downloading ' . count($missingImages) . ' random photos from internet...');
+            $this->command->info('กำลังดาวน์โหลด ' . count($missingImages) . ' รูปภาพจากอินเทอร์เน็ต...');
             $this->downloadRandomImages($missingImages, $uploadDir);
         } else {
-            $this->command->info('All sample images already exist.');
+            $this->command->info('รูปภาพตัวอย่างทั้งหมดมีอยู่แล้ว');
         }
 
-        $this->command->info('Image seeding completed. Total images: ' . count($requiredImages));
+        $this->command->info('การเพิ่มรูปภาพเสร็จสมบูรณ์ จำนวนรูปภาพทั้งหมด: ' . count($requiredImages));
     }
 
     /**
@@ -74,9 +74,9 @@ class ImageSeeder extends Seeder
                 if ($response->successful()) {
                     $filePath = $uploadDir . '/' . $imageName;
                     file_put_contents($filePath, $response->body());
-                    $this->command->info("Downloaded: {$imageName} from {$url}");
+                    $this->command->info("ดาวน์โหลดแล้ว: {$imageName} จาก {$url}");
                 } else {
-                    $this->command->error("Failed to download: {$imageName}");
+                    $this->command->error("ไม่สามารถดาวน์โหลด: {$imageName}");
                     // Create a fallback placeholder if download fails
                     $this->createFallbackImage($uploadDir . '/' . $imageName, $config);
                 }
@@ -85,7 +85,7 @@ class ImageSeeder extends Seeder
                 usleep(500000); // 0.5 seconds
 
             } catch (\Exception $e) {
-                $this->command->error("Error downloading {$imageName}: " . $e->getMessage());
+                $this->command->error("เกิดข้อผิดพลาดในการดาวน์โหลด {$imageName}: " . $e->getMessage());
                 // Create a fallback placeholder if download fails
                 $this->createFallbackImage($uploadDir . '/' . $imageName, $config);
             }
@@ -132,8 +132,16 @@ class ImageSeeder extends Seeder
         $bgColor = imagecolorallocate($img, $colorSet[0], $colorSet[1], $colorSet[2]);
         $textColor = imagecolorallocate($img, 255, 255, 255);
 
-        // Add category text
-        $text = strtoupper($config['category']) . ' IMAGE';
+        // Add category text in Thai
+        $categoryText = [
+            'tech' => 'เทคโนโลยี',
+            'business' => 'ธุรกิจ',
+            'people' => 'บุคคล'
+        ];
+
+        $text = isset($categoryText[$config['category']]) ? $categoryText[$config['category']] : strtoupper($config['category']);
+        $text = 'รูปภาพ ' . $text;
+
         $font_size = 5;
         $text_width = imagefontwidth($font_size) * strlen($text);
         $text_x = ($width - $text_width) / 2;
@@ -144,6 +152,6 @@ class ImageSeeder extends Seeder
         imagejpeg($img, $filepath, 90);
         imagedestroy($img);
 
-        $this->command->info("Created fallback image: " . basename($filepath));
+        $this->command->info("สร้างรูปภาพสำรอง: " . basename($filepath));
     }
 }

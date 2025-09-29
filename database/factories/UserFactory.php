@@ -23,11 +23,54 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Thai first names
+        $thaiFirstNames = [
+            'สมชาย',
+            'สมหญิง',
+            'ประวิทย์',
+            'สุนทรี',
+            'ธนากร',
+            'วิชัย',
+            'นภา',
+            'กิตติ',
+            'อรอุมา',
+            'พิชัย',
+            'ธนพล',
+            'จิราภรณ์',
+            'สุรชัย',
+            'อภิรดี',
+            'วราภรณ์'
+        ];
+
+        // Thai last names
+        $thaiLastNames = [
+            'ใจดี',
+            'รักเรียน',
+            'พัฒน์ชัย',
+            'สว่างจิต',
+            'วิเศษชัย',
+            'ทองคำ',
+            'มณีรัตน์',
+            'สุขสบาย',
+            'เจริญผล',
+            'อุดมศักดิ์',
+            'สุวรรณ',
+            'มงคล',
+            'พงษ์ศักดิ์',
+            'ธนทรัพย์',
+            'ปัญญาดี'
+        ];
+
+        // Randomly select Thai first and last names
+        $firstName = $this->faker->randomElement($thaiFirstNames);
+        $lastName = $this->faker->randomElement($thaiLastNames);
+        $fullName = $firstName . ' ' . $lastName;
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $fullName,
+            'email' => strtolower($firstName . '.' . $lastName) . '@student.npru.ac.th',
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => static::$password ??= Hash::make('password123'),
             'remember_token' => Str::random(10),
         ];
     }
@@ -37,7 +80,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
