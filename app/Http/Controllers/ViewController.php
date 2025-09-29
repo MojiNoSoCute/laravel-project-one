@@ -18,6 +18,15 @@ class ViewController extends Controller
     }
 
     /**
+     * Display the course guide page.
+     */
+    public function courseGuide()
+    {
+        // We're only showing static program information on this page
+        return view('course-guide');
+    }
+
+    /**
      * Display the specified resource for public viewing.
      */
     public function show(Post $post)

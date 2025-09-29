@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 
 // Public routes
 Route::get('/', [ViewController::class, 'view'])->name('home');
+Route::get('/course-guide', [ViewController::class, 'courseGuide'])->name('course-guide');
 Route::get('/show/{post}', [ViewController::class, 'show'])->name('public.show');
 
 // Authentication routes

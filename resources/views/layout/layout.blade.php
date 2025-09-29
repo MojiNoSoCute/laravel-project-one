@@ -201,7 +201,7 @@
                 <h1>วิศวกรรมซอฟต์แวร์</h1>
                 <h2>Software Engineering</h2>
                 <p>หลักสูตรวิศวกรรมศาสตรบัณฑิต สาขาวิชาวิศวกรรมซอฟต์แวร์</p>
-                <a href="#" class="btn btn-outline-light rounded-pill mt-3">คู่มือหลักสูตร</a>
+                <a href="{{ route('course-guide') }}" class="btn btn-outline-light rounded-pill mt-3">คู่มือหลักสูตร</a>
             </div>
         </section>
 
