@@ -1,19 +1,17 @@
-@extends('layout.admin')
+@extends('layout/layout')
 
-@section('page-title', 'แก้ไขโพสต์')
-
-@section('admin-content')
-<div class="container-fluid">
+@section('content')
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="mb-0">แก้ไขโพสต์</h2>
+                    <h2 class="mb-0">Edit Post</h2>
                 </div>
                 <div class="card-body">
                     @if($errors->any())
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>กรุณาแก้ไขข้อผิดพลาดต่อไปนี้:</strong>
+                        <strong>Please fix the following errors:</strong>
                         <ul class="mb-0 mt-2">
                             @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -29,51 +27,51 @@
 
                         @if($post->image)
                         <div class="mb-4">
-                            <label class="form-label fw-bold">ภาพปัจจุบัน</label>
+                            <label class="form-label fw-bold">Current Image</label>
                             <div class="border rounded p-3 bg-light">
                                 <img src="{{ asset($post->image) }}" alt="Current image" class="img-thumbnail mx-auto d-block" style="max-width: 300px; max-height: 300px;">
-                                <p class="text-center mt-2 mb-0"><small class="text-muted">ภาพปัจจุบัน</small></p>
+                                <p class="text-center mt-2 mb-0"><small class="text-muted">Current image</small></p>
                             </div>
                         </div>
                         @endif
 
                         <div class="mb-4">
-                            <label for="image" class="form-label fw-bold">อัปโหลดภาพใหม่ <small class="text-muted">(ไม่บังคับ)</small></label>
+                            <label for="image" class="form-label fw-bold">Upload New Image <small class="text-muted">(Optional)</small></label>
                             <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" accept="image/*">
-                            <div class="form-text">เว้นว่างไว้เพื่อใช้ภาพเดิม หรืออัปโหลดภาพใหม่ (JPG, PNG, GIF, WEBP, ฯลฯ) เพื่อแทนที่ - ขนาดสูงสุด: 2MB</div>
+                            <div class="form-text">Leave empty to keep current image. Upload a new image file (JPG, PNG, GIF, WEBP, etc.) to replace - Max size: 2MB</div>
                             @error('image')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="main" class="form-label fw-bold">หมวดหมู่ <span class="text-danger">*</span></label>
+                            <label for="main" class="form-label fw-bold">Category <span class="text-danger">*</span></label>
                             <select name="main" id="main" class="form-select @error('main') is-invalid @enderror" required>
-                                <option value="">เลือกหมวดหมู่</option>
+                                <option value="">Select Category</option>
                                 <option value="1" {{ (old('main', $post->main) == '1') ? 'selected' : '' }}>ภาพรวมหลักสูตร (Course Overview)</option>
                                 <option value="2" {{ (old('main', $post->main) == '2') ? 'selected' : '' }}>กิจกรรมที่น่าสนใจ (Interesting Activities)</option>
                                 <option value="3" {{ (old('main', $post->main) == '3') ? 'selected' : '' }}>อาจารย์ผู้สอน (Teachers)</option>
                                 <option value="4" {{ (old('main', $post->main) == '4') ? 'selected' : '' }}>ผลงานนักศึกษา (Student Works)</option>
                                 <option value="5" {{ (old('main', $post->main) == '5') ? 'selected' : '' }}>ศิษย์เก่าเด่น (Outstanding Alumni)</option>
                             </select>
-                            <div class="form-text">เลือกส่วนที่โพสต์นี้จะอยู่</div>
+                            <div class="form-text">Choose which section this post belongs to</div>
                             @error('main')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="title" class="form-label fw-bold">ชื่อเรื่อง <span class="text-danger">*</span></label>
-                            <input type="text" name="title" id="title" value="{{ old('title', $post->title) }}" class="form-control @error('title') is-invalid @enderror" placeholder="ใส่ชื่อเรื่องของโพสต์" required>
+                            <label for="title" class="form-label fw-bold">Title <span class="text-danger">*</span></label>
+                            <input type="text" name="title" id="title" value="{{ old('title', $post->title) }}" class="form-control @error('title') is-invalid @enderror" placeholder="Enter post title" required>
                             @error('title')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="content" class="form-label fw-bold">เนื้อหา <span class="text-danger">*</span></label>
-                            <textarea name="content" id="content" class="form-control @error('content') is-invalid @enderror" rows="8" placeholder="ใส่เนื้อหาของโพสต์" required>{{ old('content', $post->content) }}</textarea>
-                            <div class="form-text">ให้ข้อมูลรายละเอียดเกี่ยวกับโพสต์นี้</div>
+                            <label for="content" class="form-label fw-bold">Content <span class="text-danger">*</span></label>
+                            <textarea name="content" id="content" class="form-control @error('content') is-invalid @enderror" rows="8" placeholder="Enter post content" required>{{ old('content', $post->content) }}</textarea>
+                            <div class="form-text">Provide detailed information about this post</div>
                             @error('content')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -81,10 +79,10 @@
 
                         <div class="d-flex gap-2 justify-content-end">
                             <a href="{{ route('admin.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left me-1"></i> กลับไปยังรายการ
+                                <i class="fas fa-arrow-left me-1"></i> Back to List
                             </a>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-1"></i> อัปเดตโพสต์
+                                <i class="fas fa-save me-1"></i> Update Post
                             </button>
                         </div>
                     </form>
