@@ -2,7 +2,6 @@
 
 @section('content')
 <h1>All Posts</h1>
-<a href="{{ route('admin.create') }}" class="btn btn-primary mb-3">+ Create New Post</a>
 
 @if(session('success'))
 <div class="alert alert-success">{{ session('success') }}</div>
@@ -11,7 +10,10 @@
 @if($posts->count())
 
 <section class="my-5">
-    <h2 class="section-title">ภาพรวมหลักสูตร</h2>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="section-title mb-0">ภาพรวมหลักสูตร</h2>
+        <a href="{{ route('admin.create.course-overview') }}" class="btn btn-primary">+ Create New</a>
+    </div>
     <div class="row g-4">
         @foreach ($posts as $post)
         @if ($post->main === '1')
@@ -25,7 +27,7 @@
                     <h3>{{ $post->title }}</h3>
                     <p>{{ Str::limit($post->content, 100) }}</p>
                     <a href="{{ route('admin.show', $post) }}" class="btn btn-secondary">View</a>
-                    <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning">Edit</a>
+                    <a href="{{ route('admin.edit.course-overview', $post) }}" class="btn btn-warning">Edit</a>
                     <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline"
                         onsubmit="return confirm('Are you sure you want to delete this post?');">
                         @csrf
@@ -42,7 +44,10 @@
 </section>
 
 <section class="my-5">
-    <h2 class="section-title">กิจกรรมที่น่าสนใจ</h2>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="section-title mb-0">กิจกรรมที่น่าสนใจ</h2>
+        <a href="{{ route('admin.create.interesting-activities') }}" class="btn btn-primary">+ Create New</a>
+    </div>
     <div class="row g-4">
         @foreach ($posts as $post)
         @if ($post->main === '2')
@@ -57,7 +62,7 @@
                     <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
                     <div class="mt-auto">
                         <a href="{{ route('admin.show', $post) }}" class="btn btn-secondary btn-sm">View</a>
-                        <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('admin.edit.interesting-activities', $post) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline"
                             onsubmit="return confirm('Are you sure you want to delete this post?');">
                             @csrf
@@ -74,7 +79,10 @@
 </section>
 
 <section class="my-5">
-    <h2 class="section-title">อาจารย์ผู้สอน</h2>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="section-title mb-0">อาจารย์ผู้สอน</h2>
+        <a href="{{ route('admin.create.teachers') }}" class="btn btn-primary">+ Create New</a>
+    </div>
     <div class="row g-4">
         @foreach ($posts as $post)
         @if ($post->main === '3')
@@ -88,7 +96,7 @@
                     <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
                     <div class="mt-auto">
                         <a href="{{ route('admin.show', $post) }}" class="btn btn-secondary btn-sm">View</a>
-                        <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('admin.edit.teachers', $post) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline"
                             onsubmit="return confirm('Are you sure you want to delete this post?');">
                             @csrf
@@ -105,7 +113,10 @@
 </section>
 
 <section class="my-5">
-    <h2 class="section-title">ผลงานนักศึกษา</h2>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="section-title mb-0">ผลงานนักศึกษา</h2>
+        <a href="{{ route('admin.create.student-works') }}" class="btn btn-primary">+ Create New</a>
+    </div>
     <div class="row g-4">
         @foreach ($posts as $post)
         @if ($post->main === '4')
@@ -120,7 +131,7 @@
                     <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
                     <div class="mt-auto">
                         <a href="{{ route('admin.show', $post) }}" class="btn btn-secondary btn-sm">View</a>
-                        <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('admin.edit.student-works', $post) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline"
                             onsubmit="return confirm('Are you sure you want to delete this post?');">
                             @csrf
@@ -137,7 +148,10 @@
 </section>
 
 <section class="my-5">
-    <h2 class="section-title">ศิษย์เก่าเด่น</h2>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="section-title mb-0">ศิษย์เก่าเด่น</h2>
+        <a href="{{ route('admin.create.outstanding-alumni') }}" class="btn btn-primary">+ Create New</a>
+    </div>
     <div class="row g-4">
         @foreach ($posts as $post)
         @if ($post->main === '5')
@@ -152,7 +166,7 @@
                     <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
                     <div class="mt-auto">
                         <a href="{{ route('admin.show', $post) }}" class="btn btn-secondary btn-sm">View</a>
-                        <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('admin.edit.outstanding-alumni', $post) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline"
                             onsubmit="return confirm('Are you sure you want to delete this post?');">
                             @csrf
