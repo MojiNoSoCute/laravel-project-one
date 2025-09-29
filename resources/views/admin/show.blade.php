@@ -1,7 +1,9 @@
-@extends('layout/layout')
+@extends('layout.admin')
 
-@section('content')
-<div class="container">
+@section('page-title', 'ดูโพสต์')
+
+@section('admin-content')
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -11,7 +13,7 @@
                 <div class="card-body">
                     <h1 class="card-title">{{ $post->title }}</h1>
                     <p class="text-muted mb-3">
-                        <small>Category:
+                        <small>หมวดหมู่:
                             @if($post->main == '1')
                             ภาพรวมหลักสูตร (Course Overview)
                             @elseif($post->main == '2')
@@ -30,8 +32,8 @@
                     </div>
                     <hr>
                     <div class="d-flex gap-2">
-                        <a href="{{ route('admin.index') }}" class="btn btn-secondary">Back</a>
-                        <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning">Edit</a>
+                        <a href="{{ route('admin.index') }}" class="btn btn-secondary">กลับ</a>
+                        <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning">แก้ไข</a>
                     </div>
                 </div>
             </div>

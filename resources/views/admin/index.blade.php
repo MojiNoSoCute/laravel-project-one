@@ -1,173 +1,71 @@
-@extends('layout/layout')
+@extends('layout.admin')
 
-@section('content')
-<h1>All Posts</h1>
-<a href="{{ route('admin.create') }}" class="btn btn-primary mb-3">+ Create New Post</a>
+@section('page-title', 'จัดการโพสต์')
 
-@if(session('success'))
-<div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
-@if($posts->count())
-
-<section class="my-5">
-    <h2 class="section-title">ภาพรวมหลักสูตร</h2>
-    <div class="row g-4">
-        @foreach ($posts as $post)
-        @if ($post->main === '1')
-        <div class="col-lg-6">
-            <div class="card card-custom h-100 p-3">
-                @if($post->image)
-                <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="img-fluid mb-3 rounded"
-                    style="width: 100%; height: 200px; object-fit: cover;">
-                @endif
-                <div class="card-body">
-                    <h3>{{ $post->title }}</h3>
-                    <p>{{ Str::limit($post->content, 100) }}</p>
-                    <a href="{{ route('admin.show', $post) }}" class="btn btn-secondary">View</a>
-                    <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning">Edit</a>
-                    <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline"
-                        onsubmit="return confirm('Are you sure you want to delete this post?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        @endif
-        @endforeach
+@section('admin-content')
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>จัดการโพสต์</h1>
+        <a href="{{ route('admin.create') }}" class="btn btn-primary">+ สร้างโพสต์ใหม่</a>
     </div>
 
-</section>
-
-<section class="my-5">
-    <h2 class="section-title">กิจกรรมที่น่าสนใจ</h2>
-    <div class="row g-4">
-        @foreach ($posts as $post)
-        @if ($post->main === '2')
-        <div class="col-md-6 col-lg-3">
-            <div class="card card-custom p-3 h-100">
-                @if($post->image)
-                <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="img-fluid mb-3 rounded"
-                    style="width: 100%; height: 150px; object-fit: cover;">
-                @endif
-                <div class="card-body">
-                    <h4 class="card-title fw-bold">{{ $post->title }}</h4>
-                    <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
-                    <div class="mt-auto">
-                        <a href="{{ route('admin.show', $post) }}" class="btn btn-secondary btn-sm">View</a>
-                        <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline"
-                            onsubmit="return confirm('Are you sure you want to delete this post?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </div>
-                </div>
+    @if($posts->count())
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ภาพ</th>
+                            <th>ชื่อเรื่อง</th>
+                            <th>หมวดหมู่</th>
+                            <th>วันที่สร้าง</th>
+                            <th>การจัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($posts as $post)
+                        <tr>
+                            <td>
+                                @if($post->image)
+                                <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="img-fluid" style="width: 80px; height: 60px; object-fit: cover;">
+                                @else
+                                ไม่มีภาพ
+                                @endif
+                            </td>
+                            <td>{{ $post->title }}</td>
+                            <td>
+                                @if($post->main === '1')
+                                ภาพรวมหลักสูตร
+                                @elseif($post->main === '2')
+                                กิจกรรมที่น่าสนใจ
+                                @elseif($post->main === '3')
+                                อาจารย์ผู้สอน
+                                @elseif($post->main === '4')
+                                ผลงานนักศึกษา
+                                @elseif($post->main === '5')
+                                ศิษย์เก่าเด่น
+                                @endif
+                            </td>
+                            <td>{{ $post->created_at->format('d/m/Y H:i') }}</td>
+                            <td>
+                                <a href="{{ route('admin.show', $post) }}" class="btn btn-sm btn-info">ดู</a>
+                                <a href="{{ route('admin.edit', $post) }}" class="btn btn-sm btn-warning">แก้ไข</a>
+                                <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline" onsubmit="return confirm('คุณแน่ใจหรือไม่ที่จะลบโพสต์นี้?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">ลบ</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-        @endif
-        @endforeach
     </div>
-</section>
-
-<section class="my-5">
-    <h2 class="section-title">อาจารย์ผู้สอน</h2>
-    <div class="row g-4">
-        @foreach ($posts as $post)
-        @if ($post->main === '3')
-        <div class="col-sm-6 col-md-4 col-lg-2-4">
-            <div class="card card-custom p-3 h-100 text-center">
-                @if($post->image)
-                <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="teacher-img mx-auto">
-                @endif
-                <div class="card-body">
-                    <h4 class="card-title fw-bold">{{ $post->title }}</h4>
-                    <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
-                    <div class="mt-auto">
-                        <a href="{{ route('admin.show', $post) }}" class="btn btn-secondary btn-sm">View</a>
-                        <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline"
-                            onsubmit="return confirm('Are you sure you want to delete this post?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endif
-        @endforeach
-    </div>
-</section>
-
-<section class="my-5">
-    <h2 class="section-title">ผลงานนักศึกษา</h2>
-    <div class="row g-4">
-        @foreach ($posts as $post)
-        @if ($post->main === '4')
-        <div class="col-md-6 col-lg-3">
-            <div class="card card-custom p-3 h-100">
-                @if($post->image)
-                <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="img-fluid mb-3 rounded"
-                    style="width: 100%; height: 150px; object-fit: cover;">
-                @endif
-                <div class="card-body">
-                    <h4 class="card-title fw-bold">{{ $post->title }}</h4>
-                    <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
-                    <div class="mt-auto">
-                        <a href="{{ route('admin.show', $post) }}" class="btn btn-secondary btn-sm">View</a>
-                        <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline"
-                            onsubmit="return confirm('Are you sure you want to delete this post?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endif
-        @endforeach
-    </div>
-</section>
-
-<section class="my-5">
-    <h2 class="section-title">ศิษย์เก่าเด่น</h2>
-    <div class="row g-4">
-        @foreach ($posts as $post)
-        @if ($post->main === '5')
-        <div class="col-md-6 col-lg-3">
-            <div class="card card-custom p-3 h-100">
-                @if($post->image)
-                <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="img-fluid mb-3 rounded"
-                    style="width: 100%; height: 150px; object-fit: cover;">
-                @endif
-                <div class="card-body">
-                    <h4 class="card-title fw-bold">{{ $post->title }}</h4>
-                    <p class="card-text">{{ Str::limit($post->content, 100) }}</p>
-                    <div class="mt-auto">
-                        <a href="{{ route('admin.show', $post) }}" class="btn btn-secondary btn-sm">View</a>
-                        <a href="{{ route('admin.edit', $post) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('admin.destroy', $post) }}" method="POST" style="display:inline"
-                            onsubmit="return confirm('Are you sure you want to delete this post?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endif
-        @endforeach
-    </div>
-</section>
-@else
-<div class="alert alert-info">ยังไม่มีโพสในระบบ</div>
-@endif
+    @else
+    <div class="alert alert-info">ยังไม่มีโพสต์ในระบบ</div>
+    @endif
+</div>
 @endsection

@@ -167,9 +167,30 @@
                         <li class="nav-item">
                             <a href="{{ route('home') }}" class="nav-link {{ request()->is('/') ? 'active' : '' }}">หน้าหลัก</a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('create') }}" class="nav-link">Create Post</a>
-                        </li> --}}
+                        @auth
+                        @if(Auth::user()->email === 'admin@se.npru.ac.th')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.index') }}" class="nav-link">แผงควบคุม</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-link nav-link">ออกจากระบบ</button>
+                            </form>
+                        </li>
+                        @else
+                        <li class="nav-item">
+                            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-link nav-link">ออกจากระบบ</button>
+                            </form>
+                        </li>
+                        @endif
+                        @else
+                        <li class="nav-item">
+                            <a href="{{ route('login') }}" class="nav-link">เข้าสู่ระบบ</a>
+                        </li>
+                        @endauth
                     </ul>
                 </div>
             </div>
